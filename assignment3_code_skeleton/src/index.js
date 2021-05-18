@@ -4,9 +4,10 @@
     ********************************
  */
 import * as THREE from 'three'
-import { Color } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GUI } from 'three/examples/jsm/libs/dat.gui.module.js';
+import { MathUtils } from 'three';
+
 
 
 // defining the variables
@@ -80,9 +81,25 @@ function init() {
     })
 
     gui.add(render_params, 'object transform - bool').onChange(function (bool_val) {
-        // TODO: apply the transformations
+        if(bool_val){
+            mesh.applyMatrix4(rotateYTrans);
+        }else{
+            mesh.applyMatrix4(invers);
+        }
     })
 
+    /**
+     * Transformation
+     */
+
+     let rotationAngle = MathUtils.degToRad(90)
+     let rotateYTrans = new THREE.Matrix4();
+     rotateYTrans.makeRotationY(rotationAngle);
+     rotateYTrans = rotateYTrans.setPosition(-0.5, -0.4,0);
+     
+     let invers = rotateYTrans.clone();
+     invers = invers.invert();
+     
     /*
         ********************************
         ******** Manual Geometry *******
@@ -128,9 +145,9 @@ function init() {
         vertexColors: true
     } );
 
-    mesh = new THREE.Mesh( geometry, material, 
-        )
+    mesh = new THREE.Mesh( geometry, material)
     scene.add(mesh)
+
 }
 /*
     ********************************
