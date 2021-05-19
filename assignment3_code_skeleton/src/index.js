@@ -71,7 +71,7 @@ function init() {
     // add color picker for directional light color
     gui.addColor(light_params, 'directional light - color').onChange(function (color_val) {
         directional_light.color.setHex(color_val);
-        //render();
+       // render();
     })
 
     // add input element for directional light intensity
@@ -121,29 +121,47 @@ function init() {
         0.5, Math.sqrt(0.5), -0.5
     ];
     const normals = [
-        0, 0, 0,
-        0.707107, -0.5, 0,
-        0.707107, 0, 0.707107,
-        0, 0.5, 0.707107,
-        0.3535535, 0, 0.3535535];
+            -1, 1, 1,
+            -1, 1, -1,
+            1, 1, -1,
+            1, 1, 1,
+            0, 1, 0
+        ];
+
+    // const normals = [
+    //     -0.7071, 1, 0.7071,
+    //     -0.7071, 1, -0.7071,
+    //     0.7071, 1, -0.7071,
+    //     0.7071, 1, 0.7071,
+    //     0, 2, 0
+    // ];
+    // const normals = [
+    //     0, 0, 0,
+    //     0.707107, -0.5, 0,
+    //     0.707107, 0, 0.707107,
+    //     0, 0.5, 0.707107,
+    //     0.3535535, 0, 0.3535535];
 
     const colors = [
         255, 0, 0,
         255, 225, 0,
         0, 128, 0,
         0, 0, 255,
-        255, 255, 255
+        0, 0, 0
     ];
 
 
     geometry.setIndex(indices);
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-    geometry.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
-    geometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ));
+//geometry.computeVertexNormals()    
+     geometry.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
+   geometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colors,3 ));
 
     const material = new THREE.MeshPhongMaterial( {
-        vertexColors: true
+        // vertexColors: true
+        
     } );
+    
 
     mesh = new THREE.Mesh( geometry, material)
     scene.add(mesh)
