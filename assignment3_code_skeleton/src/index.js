@@ -71,7 +71,7 @@ function init() {
     // add color picker for directional light color
     gui.addColor(light_params, 'directional light - color').onChange(function (color_val) {
         directional_light.color.setHex(color_val);
-       // render();
+        // render();
     })
 
     // add input element for directional light intensity
@@ -81,9 +81,9 @@ function init() {
     })
 
     gui.add(render_params, 'object transform - bool').onChange(function (bool_val) {
-        if(bool_val){
+        if (bool_val) {
             mesh.applyMatrix4(rotateYTrans);
-        }else{
+        } else {
             mesh.applyMatrix4(invers);
         }
     })
@@ -92,14 +92,14 @@ function init() {
      * Transformation
      */
 
-     let rotationAngle = MathUtils.degToRad(90)
-     let rotateYTrans = new THREE.Matrix4();
-     rotateYTrans.makeRotationY(rotationAngle);
-     rotateYTrans = rotateYTrans.setPosition(-0.5, -0.4,0);
-     
-     let invers = rotateYTrans.clone();
-     invers = invers.invert();
-     
+    let rotationAngle = MathUtils.degToRad(90)
+    let rotateYTrans = new THREE.Matrix4();
+    rotateYTrans.makeRotationY(rotationAngle);
+    rotateYTrans = rotateYTrans.setPosition(-0.5, -0.4, 0);
+
+    let invers = rotateYTrans.clone();
+    invers = invers.invert();
+
     /*
         ********************************
         ******** Manual Geometry *******
@@ -111,7 +111,11 @@ function init() {
         1, 0, 4,
         0, 3, 4,
         3, 2, 4,
-        2, 1, 4];
+        2, 1, 4,
+        1, 2, 3,
+        0, 1, 3,
+
+    ];
 
     const vertices = [
         0.0, 0.0, 0.0,
@@ -121,49 +125,36 @@ function init() {
         0.5, Math.sqrt(0.5), -0.5
     ];
     const normals = [
-            -1, 1, 1,
-            -1, 1, -1,
-            1, 1, -1,
-            1, 1, 1,
-            0, 1, 0
-        ];
-
-    // const normals = [
-    //     -0.7071, 1, 0.7071,
-    //     -0.7071, 1, -0.7071,
-    //     0.7071, 1, -0.7071,
-    //     0.7071, 1, 0.7071,
-    //     0, 2, 0
-    // ];
-    // const normals = [
-    //     0, 0, 0,
-    //     0.707107, -0.5, 0,
-    //     0.707107, 0, 0.707107,
-    //     0, 0.5, 0.707107,
-    //     0.3535535, 0, 0.3535535];
+        -1, 1, 1,
+        -1, 1, -1,
+        1, 1, -1,
+        1, 1, 1,
+        0, 1, 0
+    ];
 
     const colors = [
         255, 0, 0,
         255, 225, 0,
         0, 128, 0,
         0, 0, 255,
-        0, 0, 0
+        255, 255, 255
     ];
 
 
     geometry.setIndex(indices);
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-//geometry.computeVertexNormals()    
-     geometry.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
-   geometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colors,3 ));
+    geometry.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
+    geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
 
-    const material = new THREE.MeshPhongMaterial( {
+
+    const material = new THREE.MeshPhongMaterial({
+        //If VertexColors is true, a false color pyramid is displayed.
         // vertexColors: true
-        
-    } );
-    
 
-    mesh = new THREE.Mesh( geometry, material)
+    });
+
+
+    mesh = new THREE.Mesh(geometry, material)
     scene.add(mesh)
 
 }
