@@ -111,7 +111,10 @@ function init() {
         1, 0, 4,
         0, 3, 4,
         3, 2, 4,
-        2, 1, 4];
+        2, 1, 4,
+        3, 2, 0,
+        0, 1, 3,
+        1, 2, 3];
 
     const vertices = [
         0.0, 0.0, 0.0,
@@ -143,10 +146,10 @@ function init() {
     //     0.3535535, 0, 0.3535535];
 
     const colors = [
-        255, 0, 0,
-        255, 225, 0,
-        0, 128, 0,
-        0, 0, 255,
+        1, 0, 0,
+        1, 1, 0,
+        0, 1, 0,
+        0, 0, 1,
         0, 0, 0
     ];
 
@@ -154,12 +157,11 @@ function init() {
     geometry.setIndex(indices);
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
 //geometry.computeVertexNormals()    
-     geometry.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
-   geometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colors,3 ));
+    geometry.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
+    geometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colors,3 ));
 
     const material = new THREE.MeshPhongMaterial( {
-        // vertexColors: true
-        
+         vertexColors: true
     } );
     
 
@@ -186,3 +188,10 @@ function animate() {
 }
 init();
 animate();
+
+
+/*
+Berechnugn der Normale
+Diagnola nehemn und kreuzprodukt
+punkt mit mehreren Faces -> zusammen nehmrn
+ */
