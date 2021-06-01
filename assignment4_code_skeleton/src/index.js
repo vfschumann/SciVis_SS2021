@@ -105,10 +105,17 @@ function init() {
         boxLength: {value: new THREE.Vector3(length_cube, length_cube, length_cube)}
     }
     // cube material
-    material_cube =
+    material_cube =  new THREE.ShaderMaterial( {
+        uniforms: uniforms_cube,
+        vertexShader: vertShader_cube,
+        fragmentShader: fragShader_cube,
+        glslVersion: THREE.GLSL3
+
+    } );
+
         // TODO: change MeshBasicMaterial to a material for the cube that can use custom shaders
         //       set glslVersion to 'glslVersion: THREE.GLSL3'
-        new THREE.MeshBasicMaterial();
+      //  new THREE.MeshBasicMaterial();
     // cube object
     let mesh_cube = new THREE.Mesh(geometry_cube, material_cube);
     mesh_cube.position.copy(center_cube)

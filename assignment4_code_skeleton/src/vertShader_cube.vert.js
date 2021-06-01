@@ -9,7 +9,7 @@ void main() {
        it contains a vec3 with local coordinates of the vertex */
 
     // moving box to positive local coordiantes and normalize the lengths to be between 0 and 1
-    localposVertex = ;// TODO
+    localposVertex = normalize(boxLength+position);// TODO
     // transform local to clip space
-    gl_Position = ;// TODO:
+    gl_Position =  projectionMatrix * modelViewMatrix* vec4( position, 1.0 );
 }`

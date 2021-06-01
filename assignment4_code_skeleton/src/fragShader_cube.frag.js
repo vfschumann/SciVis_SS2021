@@ -14,5 +14,5 @@ out vec4 out_FragColor;
 
 void main(){
     // assign the interpolated colors to color output
-    out_FragColor = ;// TODO
+    out_FragColor = vec4(clamp(boxLength - localposVertex, 0.0, 1.0), 1.0);// TODO
 }`
