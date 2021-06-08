@@ -161,9 +161,14 @@ function init() {
 
 
     material_sphere_perPixel =
-        // TODO: change MeshBasicMaterial to a material for the sphere that can use custom shaders
-        //       set glslVersion to 'glslVersion: THREE.GLSL3'
-        new THREE.MeshBasicMaterial();
+    new THREE.ShaderMaterial({
+        vertexShader: vertShader_sphere_perPixel,
+        fragmentShader: fragShader_sphere_perPixel,
+        uniforms: uniforms_sphere_perPixel,
+        glslVersion: THREE.GLSL3
+    });
+        
+       // new THREE.MeshBasicMaterial();
 
     // create mesh for the phong shaded sphere
     mesh_sphere_perPixel = new THREE.Mesh(geometry_sphere_perPixel, material_sphere_perPixel);
