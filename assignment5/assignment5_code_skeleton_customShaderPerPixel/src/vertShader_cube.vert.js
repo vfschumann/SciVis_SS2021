@@ -1,4 +1,5 @@
 //language=GLSL
+//Schumann_Vic-Fabienne__Kopp_Alexandra
 export const vertShader_cube =`
 
 uniform vec3 boxLength;

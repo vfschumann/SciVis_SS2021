@@ -1,4 +1,5 @@
 //language=GLSL
+//Schumann_Vic-Fabienne__Kopp_Alexandra
 export const vertShader_sphere_perPixel =`
 
 // pass vertex coordinate in world space to fragment shader

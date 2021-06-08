@@ -1,3 +1,4 @@
+#Schumann_Vic-Fabienne__Kopp_Alexandra
 data1 <- read.csv('/home/alexandra/git/SciVis_SS2021/assignment5/A5_exercise_3.2_data/Data1.csv', sep = ";")
 data2 <- read.csv('/home/alexandra/git/SciVis_SS2021/assignment5/A5_exercise_3.2_data/Data2.csv', sep = ";")
 data3 <- read.csv('/home/alexandra/git/SciVis_SS2021/assignment5/A5_exercise_3.2_data/Data3.csv', sep = ";")
