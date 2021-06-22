@@ -1,4 +1,5 @@
 //language=GLSL
+//Schumann_Vic-Fabienne__Kopp_Alexandra
 export const vertShader_sphere_perPixel =`
 
 // pass vertex coordinate in world space to fragment shader
@@ -7,7 +8,7 @@ out vec4 posVertex;
 out vec3 normalVertex;
 
 void main() {
-    posVertex = ;// TODO
-    normalVertex = ;// TODO
-    gl_Position = ;// TODO
+    posVertex = modelMatrix * vec4( position, 1.0);// TODO
+    normalVertex = normalize(position);// TODO
+    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0);// TODO
 }`
