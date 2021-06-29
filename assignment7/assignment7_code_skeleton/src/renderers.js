@@ -20,45 +20,33 @@ import * as THREE from 'three';
     4. position -> pos_vector
      */
 export function renderAtoms( atom_list ) {
-    const geometryAtoms = atom_list.geometryAtoms; // what is that and how does it work?
-    const json = atom_list.json; // what is that and why do we need it?
+
 
     const boxGeometry = new THREE.BoxGeometry( 1, 1, 1 ); // nur übernommen, kp ob/warum wir es brauchen
-    const sphereGeometry = new THREE.IcosahedronGeometry( 1, 3 ); // warum ist das detached von "geometryAtom" ?
 
-    // warum? weshalb wieso?
-    geometryAtoms.computeBoundingBox();
-    geometryAtoms.boundingBox.getCenter( offset ).negate();
-
-    geometryAtoms.translate( offset.x, offset.y, offset.z );
-
-
-    let positions = geometryAtoms.getAttribute( 'pos_vector' ); // accessing that tab from the atom_list?
-    const colors = atom_colors; // not sure how to write that properly
-
-    const position = new THREE.Vector3();
-    const color = new THREE.Color();
+     // const colors = atom_colors; // not sure how to write that properly
 
     // I hope that loops now through the atm_list
-    for ( let i = 0; i < positions.count; i ++ ) {
+    for ( let i = 0; i < atom_list.length; i ++ ) {
+        /* radii
+        /* color */
 
-        position.x = positions.getX( i );
-        position.y = positions.getY( i );
-        position.z = positions.getZ( i );
 
-        // TODO: somehow get the color value from atom_colors by matching the "elem" value
+        let position = atom_list[i].pos_vector
+        const element = atom_list[i].elem;
+        const color = atom_colors[element];
+        const radius = vanDerWaal_radii[element];
 
-        const material = new THREE.MeshPhongMaterial( { color: 0x5c5c5c } ); // platzhalter
+        const sphereGeometry = new THREE.IcosahedronGeometry( radius, 3 ); // warum ist das detached von "geometryAtom" ?
+
+        const material = new THREE.MeshPhongMaterial( { color: color } );
 
         // was macht der folgende Block?
-        const object = new THREE.Mesh( sphereGeometry, material );
-        object.position.copy( position );
-        object.position.multiplyScalar( 75 );
-        object.scale.multiplyScalar( 25 );
-        root.add( object );
+        // const object = new THREE.Mesh( sphereGeometry, material );
+        // object.position.copy( position );
+        // object.position.multiplyScalar( 75 );
+        // object.scale.multiplyScalar( 25 );
 
-        // add atoms to overview of atoms?
-        const atom = json.atoms[ i ];
     }
 }
 

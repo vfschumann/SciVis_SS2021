@@ -87,7 +87,7 @@ function animate() {
 function initialize_objects(){
     clean(scene);
    // TODO: call your render-functions
-    renderAtoms(// output of parse_pdb - ich weiß nicht wie man daran kommt)
+   renderAtoms( atom_data.atom_list )
 }
 
 
