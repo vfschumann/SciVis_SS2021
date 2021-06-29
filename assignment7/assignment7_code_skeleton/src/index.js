@@ -5,7 +5,7 @@ import Stats from 'three/examples/jsm/libs/stats.module'
 import './styles/app.css'
 
 // TODO: import your render-functions from renderer.js
-
+import {renderAtoms} from "./renderers"
 import { parse_pdb } from './pdb_parser'
 import { clean } from './utility'
 
@@ -87,6 +87,7 @@ function animate() {
 function initialize_objects(){
     clean(scene);
    // TODO: call your render-functions
+    renderAtoms(// output of parse_pdb - ich weiß nicht wie man daran kommt)
 }
 
 
