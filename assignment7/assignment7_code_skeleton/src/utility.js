@@ -31,8 +31,6 @@ export function clean(scene) {
 }
 
 export function search_bonds(atom_list) {
-    // see pdb_parser.js for structure/content of atom_list
-    // TODO: find covalent bonds
     let connection_list = []
 
     for (let i = 0; i < atom_list.length; i++) {
@@ -47,6 +45,7 @@ export function search_bonds(atom_list) {
 
             if (position1 != position2) {
                 if (position1.distanceTo(position2) <= radius1 * 0.6 + radius2 * 0.6) {
+                    //check if the pair exists
                     if (connection_list.findIndex(con => con == { start: position2, end: position1 }) == -1) {
                         connection_list.push({ start: position1, end: position2 })
                     }
@@ -67,6 +66,15 @@ export function calculate_connections_elements(atom_data) {
 
 
 export function tmpFactor_coloring(tmpFactor, atom_data) {
-    // TODO BONUS: perform temperature factor based coloring
-    // TODO BONUS: use a diverging color scale (blue to white to red)
+    let valueRange = atom_data.tmpFactorMinMax[0] - atom_data.tmpFactorMinMax[1];
+    let color;
+
+    if (tmpFactor > atom_data.temp_factor_mean) {
+        color = [1, 1 - (tmpFactor / atom_data.tmpFactorMinMax[1]), 1]
+    } else if (tmpFactor == atom_data.temp_factor_mean) {
+        color = [1, 1, 1]
+    } else {
+        color = [1 - (tmpFactor / atom_data.tmpFactorMinMax[1]), 1, 1]
+    }
+    return color
 }

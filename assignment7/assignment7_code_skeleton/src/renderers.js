@@ -1,5 +1,5 @@
 import { vanDerWaal_radii, atom_colors } from "./constants";
-import { color_wrapper, calculate_connections_elements } from "./utility";
+import { color_wrapper, calculate_connections_elements, tmpFactor_coloring } from "./utility";
 import * as THREE from 'three';
 import { Vector3 } from "three";
 
@@ -20,8 +20,8 @@ import { Vector3 } from "three";
     * color -> same procedure as with radius
 4. position -> pos_vector
  */
-export function renderAtoms(atom_list, scene) {
-
+export function renderAtoms(atom_data, scene) {
+    const atom_list = atom_data.atom_list
 
     // const boxGeometry = new THREE.BoxGeometry( 1, 1, 1 ); // nur übernommen, kp ob/warum wir es brauchen
 
@@ -31,17 +31,23 @@ export function renderAtoms(atom_list, scene) {
 
         let position = atom_list[i].pos_vector
         const element = atom_list[i].elem;
-        const color = atom_colors[element];
         const radius = vanDerWaal_radii[element] * 0.25;
 
         //const sphereGeometry = new THREE.IcosahedronGeometry( radius, 3 ); // warum ist das detached von "geometryAtom" ?
         const sphereGeometry = new THREE.SphereGeometry(radius, 32, 32);
 
+         let color = atom_colors[element];
+       
 
+        // temp
+        color = new THREE.Color( ...tmpFactor_coloring(atom_list[i].temp_fact, atom_data))
+        //color = new THREE.Color( ...[0,0,.1])
         const material = new THREE.MeshPhongMaterial({ color: color });
 
+        
         // was macht der folgende Block?
         const object = new THREE.Mesh(sphereGeometry, material);
+        // object.setAttribute('color', new THREE.Float32BufferAttribute(color, 3));
         object.position.copy(position);
         // object.position.multiplyScalar( 75 );
         // object.scale.multiplyScalar( 25 );
@@ -78,7 +84,7 @@ export function renderConnectionsCylinders(connection_list, scene) {
         orientation.lookAt(start, end, new THREE.Vector3(0, 1, 0));
         offsetRotation.makeRotationX(Math.PI * .5);
         orientation.multiply(offsetRotation);
-        cylinder.applyMatrix(orientation);
+        cylinder.applyMatrix4(orientation);
 
         const mesh = new THREE.Mesh(cylinder, material);
         mesh.position.copy(position);
