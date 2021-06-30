@@ -5,7 +5,7 @@ import Stats from 'three/examples/jsm/libs/stats.module'
 import './styles/app.css'
 
 // TODO: import your render-functions from renderer.js
-import {renderAtoms} from "./renderers"
+import {renderAtoms, renderConnectionLines} from "./renderers"
 import { parse_pdb } from './pdb_parser'
 import { clean } from './utility'
 
@@ -88,6 +88,7 @@ function initialize_objects(){
     clean(scene);
    // TODO: call your render-functions
    renderAtoms( atom_data.atom_list, scene )
+   renderConnectionLines( atom_data.connection_list, scene)
 }
 
 
