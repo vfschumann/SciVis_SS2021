@@ -6,6 +6,9 @@ import './styles/app.css'
 
 // TODO: import your render-functions from renderer.js
 import {renderAtoms} from "./renderers"
+import {renderConnectionsLines} from "./renderers"
+import {renderConnectionsCylinders} from "./renderers"
+
 import { parse_pdb } from './pdb_parser'
 import { clean } from './utility'
 
@@ -87,7 +90,9 @@ function animate() {
 function initialize_objects(){
     clean(scene);
    // TODO: call your render-functions
-   renderAtoms( atom_data.atom_list )
+   renderAtoms( atom_data.atom_list, scene )
+  // renderConnectionsLines(atom_data.connection_list, scene)
+  renderConnectionsCylinders(atom_data.connection_list, scene)
 }
 
 
