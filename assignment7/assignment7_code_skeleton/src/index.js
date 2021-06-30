@@ -87,7 +87,7 @@ function animate() {
 function initialize_objects(){
     clean(scene);
    // TODO: call your render-functions
-   renderAtoms( atom_data.atom_list )
+   renderAtoms( atom_data.atom_list, scene )
 }
 
 
