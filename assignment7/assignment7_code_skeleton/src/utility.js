@@ -67,6 +67,15 @@ export function calculate_connections_elements(atom_data) {
 
 
 export function tmpFactor_coloring(tmpFactor, atom_data) {
-    // TODO BONUS: perform temperature factor based coloring
-    // TODO BONUS: use a diverging color scale (blue to white to red)
+    let valueRange = atom_data.tmpFactorMinMax[0] - atom_data.tmpFactorMinMax[1];
+    let color;
+
+    if (tmpFactor > atom_data.temp_factor_mean) {
+        color = [1, 1 - (tmpFactor / atom_data.tmpFactorMinMax[1]), 1]
+    } else if (tmpFactor == atom_data.temp_factor_mean) {
+        color = [1, 1, 1]
+    } else {
+        color = [1 - (tmpFactor / atom_data.tmpFactorMinMax[1]), 1, 1]
+    }
+    return color
 }
