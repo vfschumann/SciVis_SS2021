@@ -38,6 +38,9 @@ export function renderAtoms(atom_list, scene) {
         const sphereGeometry = new THREE.SphereGeometry(radius, 32, 32);
 
 
+        // temp
+        color = new THREE.Color( ...tmpFactor_coloring(atom_list[i].temp_fact, atom_data))
+        //color = new THREE.Color( ...[0,0,.1])
         const material = new THREE.MeshPhongMaterial({ color: color });
 
         // was macht der folgende Block?
