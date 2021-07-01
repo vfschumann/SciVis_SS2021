@@ -64,17 +64,32 @@ export function calculate_connections_elements(atom_data) {
     // TODO: calculate further necessary cylinder parameters
 }
 
-
 export function tmpFactor_coloring(tmpFactor, atom_data) {
+    // transfer rgb values to percentages
+    // got help from Rebecca & Simon
     let valueRange = atom_data.tmpFactorMinMax[0] - atom_data.tmpFactorMinMax[1];
-    let color;
+    let percentage = ( (tmpFactor - atom_data.tmpFactorMinMax[0]) ) / ( valueRange );
+    let r,g,b = 0;
+    // let color;
 
-    if (tmpFactor > atom_data.temp_factor_mean) {
-        color = [1, 1 - (tmpFactor / atom_data.tmpFactorMinMax[1]), 1]
-    } else if (tmpFactor == atom_data.temp_factor_mean) {
-        color = [1, 1, 1]
+    if (percentage <= 0.5) {
+        r = math.round(255 * (2 * percentage));
+        g = math.round(255 * (2 * percentage));
+        b = 255;
+        // color = [1, (math.round(1*(2*percentage))), (math.round(1*(2*percentage)))]
+    // } else if (percentage == atom_data.temp_factor_mean) {
+    //     r = 255;
+    //     g = 255;
+    //     b = 255;
+    //     //  color = [1, 1, 1]
     } else {
-        color = [1 - (tmpFactor / atom_data.tmpFactorMinMax[1]), 1, 1]
+        r = 255;
+        g = math.round(510 - percentage*510);
+        b = math.round(510 - percentage*510);
+        // color = [(math.round(1*(2*percentage))), (math.round(1*(2*percentage))), 1]
     }
-    return color
+    console.log("r",r,"g",g,"b",b)
+    let h = r * 0x10000 + g * 0x100 + b * 0x1;
+    return '#' + ('000000' + h.toString(16)).slice(-6);
+    // return color
 }
