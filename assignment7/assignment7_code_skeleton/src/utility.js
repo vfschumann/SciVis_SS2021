@@ -31,8 +31,6 @@ export function clean(scene) {
 }
 
 export function search_bonds(atom_list) {
-    // see pdb_parser.js for structure/content of atom_list
-    // TODO: find covalent bonds
     let connection_list = []
 
     for (let i = 0; i < atom_list.length; i++) {
@@ -47,6 +45,7 @@ export function search_bonds(atom_list) {
 
             if (position1 != position2) {
                 if (position1.distanceTo(position2) <= radius1 * 0.6 + radius2 * 0.6) {
+                    //check if the pair exists
                     if (connection_list.findIndex(con => con == { start: position2, end: position1 }) == -1) {
                         connection_list.push({ start: position1, end: position2 })
                     }
