@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { vanDerWaal_radii, atom_colors } from "./constants";
-
+import * as math from 'mathjs'
 
 // remove all meshes, lines, geometries and materials from the actual scene
 export function clean(scene) {
