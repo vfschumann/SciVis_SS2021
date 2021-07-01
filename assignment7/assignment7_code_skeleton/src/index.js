@@ -80,19 +80,19 @@ function onWindowResize() {
 window.addEventListener( 'resize', onWindowResize, false );
 
 function animate() {
-        requestAnimationFrame( animate );
-        controls.update();
-        renderer.render(scene, camera );
-        stats.update();
+    requestAnimationFrame( animate );
+    controls.update();
+    renderer.render(scene, camera );
+    stats.update();
 }
 
 /* RENDER HANDLING */
 function initialize_objects(){
     clean(scene);
-   // TODO: call your render-functions
-   renderAtoms( atom_data.atom_list, scene )
-  // renderConnectionsLines(atom_data.connection_list, scene)
-  renderConnectionsCylinders(atom_data.connection_list, scene)
+    // TODO: call your render-functions
+    renderAtoms( atom_data, scene )
+    // renderConnectionsLines(atom_data.connection_list, scene)
+    renderConnectionsCylinders(atom_data.connection_list, scene)
 }
 
 
