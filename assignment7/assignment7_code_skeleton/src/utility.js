@@ -54,10 +54,6 @@ export function search_bonds(atom_list) {
         }
     }
     return connection_list
-
-
-
-
 }
 
 export function calculate_connections_elements(atom_data) {
@@ -65,31 +61,17 @@ export function calculate_connections_elements(atom_data) {
 }
 
 export function tmpFactor_coloring(tmpFactor, atom_data) {
-    // transfer rgb values to percentages
-    // got help from Rebecca & Simon
-    let valueRange = atom_data.tmpFactorMinMax[0] - atom_data.tmpFactorMinMax[1];
-    let percentage = ( (tmpFactor - atom_data.tmpFactorMinMax[0]) ) / ( valueRange );
-    let r,g,b = 0;
-    // let color;
+    let mean = atom_data.temp_factor_mean
 
-    if (percentage <= 0.5) {
-        r = math.round(255 * (2 * percentage));
-        g = math.round(255 * (2 * percentage));
-        b = 255;
-        // color = [1, (math.round(1*(2*percentage))), (math.round(1*(2*percentage)))]
-    // } else if (percentage == atom_data.temp_factor_mean) {
-    //     r = 255;
-    //     g = 255;
-    //     b = 255;
-    //     //  color = [1, 1, 1]
+    if ( tmpFactor <= mean ){
+        // blue to white
+        let scale_blue = ( tmpFactor - atom_data.tmpFactorMinMax[0]) / ( mean - atom_data.tmpFactorMinMax[0])
+        let color = new THREE.Color( scale_blue, scale_blue, 1 )
+        return color
     } else {
-        r = 255;
-        g = math.round(510 - percentage*510);
-        b = math.round(510 - percentage*510);
-        // color = [(math.round(1*(2*percentage))), (math.round(1*(2*percentage))), 1]
+        // white to red
+        let scale_red = 1 - ( tmpFactor - mean ) / ( atom_data.tmpFactorMinMax[1] - mean )
+        let color = new THREE.Color( 1, scale_red, scale_red)
+        return color
     }
-    console.log("r",r,"g",g,"b",b)
-    let h = r * 0x10000 + g * 0x100 + b * 0x1;
-    return '#' + ('000000' + h.toString(16)).slice(-6);
-    // return color
 }
