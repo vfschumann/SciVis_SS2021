@@ -91,8 +91,8 @@ function initialize_objects(){
     clean(scene);
     // TODO: call your render-functions
     renderAtoms( atom_data, scene )
-    // renderConnectionsLines(atom_data.connection_list, scene)
-    renderConnectionsCylinders(atom_data.connection_list, scene)
+    renderConnectionsLines(atom_data.connection_list, scene)
+   // renderConnectionsCylinders(atom_data.connection_list, scene)
 }
 
 

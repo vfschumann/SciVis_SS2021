@@ -40,8 +40,7 @@ export function renderAtoms(atom_data, scene) {
 
 
         // temp
-        color = new THREE.Color( ...tmpFactor_coloring(atom_list[i].temp_fact, atom_data))
-        //color = new THREE.Color( ...[0,0,.1])
+        color = tmpFactor_coloring(atom_list[i].temp_fact, atom_data)
         const material = new THREE.MeshPhongMaterial({ color: color });
 
 
