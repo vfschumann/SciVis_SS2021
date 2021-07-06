@@ -58,6 +58,41 @@ export function search_bonds(atom_list) {
 
 export function calculate_connections_elements(atom_data) {
     // TODO: calculate further necessary cylinder parameters
+    let cylinderParams = []
+
+    let atom1ID, atom2ID
+    let atom1Pos, atom2Pos
+
+    let connection_center
+    let connection_length
+    let connection_direction
+
+    atom_data.connection_list.forEach( // calling a function for each element in an array, in order
+        atomConnectList => {
+            atom1ID = parseInt( atomConnectList[0]) - 1 // what's happening here?
+            atom1Pos = atom_data.atom_list[atom1ID].pos_vector;
+            for ( let i = 1; i < atomConnectList.length; i++ ) {
+                atom2ID = parseInt(atomConnectList[i]) - 1
+                if ( atom1ID < atom2ID ) {
+                    atom2Pos = atom_data.atom_list[atom2ID].pos_vector
+                    connection_length = atom1Pos.distanceTo(atom2Pos)
+                    connection_center = new THREE.Vector3(
+                    ( atom1Pos.x + atom2Pos.x ) / 2,
+                    ( atom1Pos.y + atom2Pos.y ) / 2,
+                    ( atom1Pos.z + atom2Pos.z ) / 2
+                )
+                    connection_direction = atom2Pos.clone().sub(atom1Pos.clone())
+                    const params = {
+                        connection_center: connection_center,
+                        connection_length: connection_length,
+                        connection_direction: connection_direction
+                    }
+                    cylinderParams.push(params)
+                }
+            }
+        }
+    )
+    return cylinderParams
 }
 
 export function tmpFactor_coloring(tmpFactor, atom_data) {
