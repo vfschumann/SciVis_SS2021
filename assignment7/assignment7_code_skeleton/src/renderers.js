@@ -66,27 +66,17 @@ export function renderConnectionsLines(connection_list, scene) {
     }
 }
 
-// Quelle: https://stackoverflow.com/questions/15139649/three-js-two-points-one-cylinder-align-issue
-export function renderConnectionsCylinders(connection_list, scene) {
-    for (let index = 0; index < connection_list.length; index++) {
-        let start = connection_list[index].start
-        let end = connection_list[index].end
-
-        const distance = start.distanceTo(end);
-        const position = end.clone().add(start).divideScalar(2)
-
-        const material = new THREE.MeshPhongMaterial({ color: 0x5c5c5c });
-        let cylinder = new THREE.CylinderGeometry(.1, .1, distance);
-
-        let orientation = new THREE.Matrix4();
-        let offsetRotation = new THREE.Matrix4();
-        orientation.lookAt(start, end, new THREE.Vector3(0, 1, 0));
-        offsetRotation.makeRotationX(Math.PI * .5);
-        orientation.multiply(offsetRotation);
-        cylinder.applyMatrix4(orientation);
-
-        const mesh = new THREE.Mesh(cylinder, material);
-        mesh.position.copy(position);
-        scene.add(mesh);
-    }
+export function renderConnectionsCylinders(atom_data, scene) {
+    const cylinderParams = calculate_connections_elements(atom_data)
+    cylinderParams.forEach( params => {
+        const material = new THREE.MeshPhongMaterial( {color: 0x5c5c5c})
+        const geometry = new THREE.CylinderBufferGeometry( .15, .15, params.connection_length, 8 )
+        const cylinderMesh = new THREE.Mesh( geometry, material )
+        const base_direction = new THREE.Vector3(0,1,0)
+        cylinderMesh.position.copy( params.connection_center )
+        cylinderMesh.quaternion.setFromUnitVectors( // what is happening here?
+            base_direction, params.connection_direction.clone().normalize()
+        )
+        scene.add(cylinderMesh)
+    })
 }
