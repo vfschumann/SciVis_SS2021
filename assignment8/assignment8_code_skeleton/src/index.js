@@ -17,12 +17,6 @@ let shaderMaterial;
 let rectSidelength = 1024;
 let terrainWidth = 20;
 
-
-const geometry = new THREE.PlaneGeometry( terrainWidth, rectSidelength );
-const material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
-const plane = new THREE.Mesh( geometry, material );
-
-
 // shader imports
 import {vertShader} from './vertexShader_heightmap.vert.js';
 import {fragShader} from './fragmentShader_heightmap.frag.js';
@@ -77,9 +71,6 @@ function init(){
         directional_light.intensity = intensity_val;
     })
 
-    // add grid
-    scene.add( plane )
-
     /*
         ********************************
         **** Geometries and Objects ****
@@ -103,15 +94,20 @@ function init(){
         });
 
     let vertices, uvs;
-    let geometry = new THREE.BufferGeometry();
+   // let geometry = new THREE.BufferGeometry();
     let indices ;
 
+    const geometry = new THREE.PlaneGeometry(20, 20, 1024, 1024) // idk why I can't use the variables here
+    const material = new THREE.MeshBasicMaterial( {color: 0x0000ff, side: THREE.DoubleSide, wireframe: true} );
+    const plane = new THREE.Mesh( geometry, material );
+
+    scene.add( plane );
     // TODO: calculate rectangular geometry with triangular faces
     // TODO: calculate uv coordinates
 
-    geometry.setIndex(indices);
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices,3));
-    geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs,2));
+    // geometry.setIndex(indices);
+    // geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices,3));
+    // geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs,2));
     geometry.computeVertexNormals();
 
 }
