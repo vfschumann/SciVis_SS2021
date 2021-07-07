@@ -17,6 +17,12 @@ let shaderMaterial;
 let rectSidelength = 1024;
 let terrainWidth = 20;
 
+
+const geometry = new THREE.PlaneGeometry( terrainWidth, rectSidelength );
+const material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+const plane = new THREE.Mesh( geometry, material );
+
+
 // shader imports
 import {vertShader} from './vertexShader_heightmap.vert.js';
 import {fragShader} from './fragmentShader_heightmap.frag.js';
@@ -71,13 +77,15 @@ function init(){
         directional_light.intensity = intensity_val;
     })
 
+    // add grid
+    scene.add( plane )
+
     /*
         ********************************
         **** Geometries and Objects ****
         ********************************
     */
     // http://www.smartjava.org/content/threejs-render-real-world-terrain-heightmap-using-open-data/
-    let texture = THREE.ImageUtils.loadTexture( "assets/heightmap_flat.png", null, loaded)
     let uniforms = {
         // TODO: load textures and set uniform variables
 
