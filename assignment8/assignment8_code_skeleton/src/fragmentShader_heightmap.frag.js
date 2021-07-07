@@ -1,4 +1,4 @@
-//language=GLSL
+// language=GLSL
 export const fragShader=`
 
     precision highp float;

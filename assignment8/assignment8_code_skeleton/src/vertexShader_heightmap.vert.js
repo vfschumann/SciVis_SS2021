@@ -1,4 +1,4 @@
-//language=GLSL
+// language=GLSL
 export const vertShader =`
 
     uniform sampler2D heightmap;
