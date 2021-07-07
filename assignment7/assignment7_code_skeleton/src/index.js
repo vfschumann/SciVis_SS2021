@@ -5,6 +5,9 @@ import Stats from 'three/examples/jsm/libs/stats.module'
 import './styles/app.css'
 
 // TODO: import your render-functions from renderer.js
+import {renderAtoms} from "./renderers"
+import {renderConnectionsLines} from "./renderers"
+import {renderConnectionsCylinders} from "./renderers"
 
 import { parse_pdb } from './pdb_parser'
 import { clean } from './utility'
@@ -77,16 +80,19 @@ function onWindowResize() {
 window.addEventListener( 'resize', onWindowResize, false );
 
 function animate() {
-        requestAnimationFrame( animate );
-        controls.update();
-        renderer.render(scene, camera );
-        stats.update();
+    requestAnimationFrame( animate );
+    controls.update();
+    renderer.render(scene, camera );
+    stats.update();
 }
 
 /* RENDER HANDLING */
 function initialize_objects(){
     clean(scene);
-   // TODO: call your render-functions
+    // TODO: call your render-functions
+    renderAtoms( atom_data, scene )
+   // renderConnectionsLines(atom_data.connection_list, scene)
+   renderConnectionsCylinders(atom_data, scene)
 }
 
 
