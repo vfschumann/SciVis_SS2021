@@ -77,6 +77,8 @@ function init(){
         ********************************
     */
     // http://www.smartjava.org/content/threejs-render-real-world-terrain-heightmap-using-open-data/
+    let texture = THREE.ImageUtils.loadTexture( "assets/heightmap_flat.png", null)
+
     let uniforms = {
         // TODO: load textures and set uniform variables
 
@@ -147,7 +149,7 @@ function init(){
     geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs,2));
     geometry.computeVertexNormals();
 
-    const material = new THREE.MeshBasicMaterial({color: 0x0000ff, wireframe: true})
+    const material = new THREE.MeshBasicMaterial({color: 0x0000ff, wireframe: true, map: texture})
     const grid = new THREE.Mesh( geometry, material )
     scene.add( grid )
 }
