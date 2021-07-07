@@ -76,10 +76,11 @@ function init(){
         **** Geometries and Objects ****
         ********************************
     */
-
-
+    // http://www.smartjava.org/content/threejs-render-real-world-terrain-heightmap-using-open-data/
+    let texture = THREE.ImageUtils.loadTexture( "assets/heightmap_flat.png", null, loaded)
     let uniforms = {
         // TODO: load textures and set uniform variables
+
         lightDir: {value: directional_light.position},
         diffSpecLightIntensity: {value: new THREE.Vector4(directional_light.intensity, directional_light.intensity, directional_light.intensity, directional_light.intensity)},
         ambientLightIntensity: {value: new THREE.Vector4(0.5, 0.5, 0.5, 1.0)},
@@ -104,7 +105,6 @@ function init(){
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices,3));
     geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs,2));
     geometry.computeVertexNormals();
-
 
 }
 
