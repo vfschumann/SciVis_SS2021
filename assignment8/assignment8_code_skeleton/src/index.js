@@ -76,8 +76,7 @@ function init(){
         **** Geometries and Objects ****
         ********************************
     */
-    // http://www.smartjava.org/content/threejs-render-real-world-terrain-heightmap-using-open-data/
-    let texture = THREE.ImageUtils.loadTexture( "assets/heightmap_flat.png", null)
+    const texture = new THREE.TextureLoader().load("assets/heightmap_flat.png")
 
     let uniforms = {
         // TODO: load textures and set uniform variables
