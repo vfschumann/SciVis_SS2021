@@ -35,7 +35,7 @@ function init(){
 
     //creating the Scene
     scene = new THREE.Scene();
-    scene.background = new THREE.Color('#878787')
+    scene.background = new THREE.Color('#181818')
 
     // adding rectSidelength camera PerspectiveCamera( fov, aspect, near, far)
     camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 100 );
@@ -77,10 +77,12 @@ function init(){
         ********************************
     */
     const texture = new THREE.TextureLoader().load("assets/heightmap_flat.png")
+    const colors = new THREE.TextureLoader().load("assets/1DColorscale_3.png")
 
     let uniforms = {
         // TODO: load textures and set uniform variables
-
+        heightmap: {value: texture},
+        colormap: {value: colors},
         lightDir: {value: directional_light.position},
         diffSpecLightIntensity: {value: new THREE.Vector4(directional_light.intensity, directional_light.intensity, directional_light.intensity, directional_light.intensity)},
         ambientLightIntensity: {value: new THREE.Vector4(0.5, 0.5, 0.5, 1.0)},
@@ -149,7 +151,9 @@ function init(){
     geometry.computeVertexNormals();
 
     const material = new THREE.MeshBasicMaterial({color: 0x0000ff, wireframe: true, map: texture})
-    const grid = new THREE.Mesh( geometry, material )
+    const grid = new THREE.Mesh( geometry, shaderMaterial )
+    // rotate by 180° otherwise the whole thing is upside down
+    grid.rotateX(3.14159265358979323846264377);
     scene.add( grid )
 }
     // TODO: control for menu so only the resolution can be changed
