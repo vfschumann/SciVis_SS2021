@@ -5,7 +5,7 @@ export const fragShader=`
     precision highp int;
     
     in vec4 posVertex;
-    in vec4 normalVertex;
+    in vec3 normalVertex;
     in vec4 vertex_color;
     
     // sphere settings
