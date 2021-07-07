@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { vanDerWaal_radii, atom_colors } from "./constants";
 import * as math from 'mathjs'
+import jank from "three/examples/jsm/offscreen/jank";
 
 // remove all meshes, lines, geometries and materials from the actual scene
 export function clean(scene) {
@@ -32,27 +33,20 @@ export function clean(scene) {
 
 export function search_bonds(atom_list) {
     let connection_list = []
-
-    for (let i = 0; i < atom_list.length; i++) {
-        const position1 = atom_list[i].pos_vector
-        const element1 = atom_list[i].elem;
-        const radius1 = vanDerWaal_radii[element1];
-
+    for ( let i = 0; i < atom_list.length; i++ ) {
+        let connection_entry = [i + 1]
         for (let j = 0; j < atom_list.length; j++) {
-            const position2 = atom_list[j].pos_vector
-            const element2 = atom_list[j].elem;
-            const radius2 = vanDerWaal_radii[element2];
-
-            if (position1 != position2) {
-                if (position1.distanceTo(position2) <= radius1 * 0.6 + radius2 * 0.6) {
-                    //check if the pair exists
-                    if (connection_list.findIndex(con => con == { start: position2, end: position1 }) == -1) {
-                        connection_list.push({ start: position1, end: position2 })
-                    }
-                }
+            let radiiSum = vanDerWaal_radii[atom_list[i].elem] + vanDerWaal_radii[atom_list[j].elem]
+            let centerDist = atom_list[i].pos_vector.distanceTo(atom_list[j].pos_vector)
+            if (centerDist < 0.6 * radiiSum) {
+                // push connection
+                connection_entry.push(j + 1)
             }
         }
+        // push connection list of an atom
+        connection_list.push(connection_entry)
     }
+    console.log("connection_list", connection_list)
     return connection_list
 }
 
