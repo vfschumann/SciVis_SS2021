@@ -16,7 +16,10 @@ export const vertShader =`
         // TODO: implement displacement
         // TODO: calculate normals
         // TODO: add color transfer function using the provided colormap
-
+        uniform float scaleFactor 
+        heightmap = texture
+        
+        
         vertex_color = vec4 (0.5, 0.5, 0.5, 1.0);
         posVertex = modelMatrix * vec4( pos_tmp, 1.0);
         gl_Position = projectionMatrix * modelViewMatrix * vec4( pos_tmp, 1.0);

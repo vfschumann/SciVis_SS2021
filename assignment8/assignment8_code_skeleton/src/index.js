@@ -161,7 +161,9 @@ function init(){
 
 // extendable render wrapper
 function render(){
-    shaderMaterial.uniforms.diffSpecLightIntensity.value.copy(new THREE.Vector4(directional_light.intensity,directional_light.intensity,directional_light.intensity, 1.0));
+    shaderMaterial.uniforms.diffSpecLightIntensity.value.copy(new THREE.Vector4(directional_light.intensity,
+                                                            directional_light.intensity,
+                                                            directional_light.intensity, 1.0));
     renderer.render(scene, camera );
 }
 
