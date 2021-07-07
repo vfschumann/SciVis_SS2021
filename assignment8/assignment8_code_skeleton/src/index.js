@@ -93,25 +93,65 @@ function init(){
             glslVersion: THREE.GLSL3
         });
 
-    let vertices, uvs;
-   // let geometry = new THREE.BufferGeometry();
-    let indices ;
 
-    const geometry = new THREE.PlaneGeometry(20, 20, 1024, 1024) // idk why I can't use the variables here
-    const material = new THREE.MeshBasicMaterial( {color: 0x0000ff, side: THREE.DoubleSide, wireframe: true} );
-    const plane = new THREE.Mesh( geometry, material );
+    // calculate rectangular geometry with triangular faces
+    // calculate uv coordinates
 
-    scene.add( plane );
-    // TODO: calculate rectangular geometry with triangular faces
-    // TODO: calculate uv coordinates
+    // got help from the group Rebekka & Simon with that part
+    // and also: https://stackoverflow.com/questions/35408593/generate-grid-mesh
 
-    // geometry.setIndex(indices);
-    // geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices,3));
-    // geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs,2));
+    let vertices = []
+    let uvs = []
+    let geometry = new THREE.BufferGeometry()
+    let indices = []
+    let center = terrainWidth / 2;
+    let y = 0;
+
+    const squareCount = rectSidelength
+    const squareSideLength = terrainWidth / squareCount
+    let rowSize = (squareCount+1);
+
+    // no idea what's happening here
+    for ( let i = 0; i <= squareCount; i++ ) {
+        let v = i / squareCount
+
+        // z coordinate
+        let z = 0 - center + i * squareSideLength
+
+        for ( let j = 0; j <= squareCount; j++ ) {
+            let u = j / squareCount
+
+            // x coordinate
+            let x = 0 - center + j * squareSideLength
+            vertices.push(x, y, z)
+            uvs.push(u,v)
+        }
+    }
+
+    for ( let i = 0; i < squareCount; i++ ) {
+        // was passiert hier?
+        let x = i + 1
+        let rowOffset0 = ( x-1 + 0 ) * rowSize
+        let rowOffset1 = ( x-1 + 1 ) * rowSize
+        for ( let j= 0; j < squareCount; j++ ) {
+            // was passiert hier? Was ist offset?
+            let y = j + 1
+            let nodeOffset0 = rowOffset0 + y-1
+            let nodeOffset1 = rowOffset1 + y-1
+            indices.push(nodeOffset0, nodeOffset0 + 1, nodeOffset1)
+            indices.push(nodeOffset1, nodeOffset0 + 1, nodeOffset1 + 1)
+        }
+    }
+    geometry.setIndex(indices);
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices,3));
+    geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs,2));
     geometry.computeVertexNormals();
 
+    const material = new THREE.MeshBasicMaterial({color: 0x0000ff, wireframe: true})
+    const grid = new THREE.Mesh( geometry, material )
+    scene.add( grid )
 }
-
+    // TODO: control for menu so only the resolution can be changed
 /*
     ********************************
     *** Animation and Rendering ****
