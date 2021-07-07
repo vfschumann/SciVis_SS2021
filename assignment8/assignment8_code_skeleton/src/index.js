@@ -77,7 +77,7 @@ function init(){
         ********************************
     */
     const texture = new THREE.TextureLoader().load("assets/heightmap_flat.png")
-    const colors = new THREE.TextureLoader().load("assets/1DColorscale_3.png")
+    const colors = new THREE.TextureLoader().load("assets/1DColorscale_1.png")
 
     let uniforms = {
         // TODO: load textures and set uniform variables
