@@ -81,6 +81,7 @@ function init(){
 
     let uniforms = {
         // TODO: load textures and set uniform variables
+        scaleFactor: {value: 1.5},
         heightmap: {value: texture},
         colormap: {value: colors},
         lightDir: {value: directional_light.position},
