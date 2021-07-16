@@ -23,7 +23,7 @@ export const fragShader=`
         vec3 fragment_pos = posVertex.xyz / posVertex.w;
         vec3 fragment_camera_direction = normalize( cameraPosition - fragment_pos);
 
-        vec3 normal = normalize(normalVertex);
+        vec3 normal = normalize(vec3(normalVertex));
         // Direction of the light, i.e. vector connection fragment_pos and lightsource
         vec3 lightDirNormalized = normalize(lightDir);
 

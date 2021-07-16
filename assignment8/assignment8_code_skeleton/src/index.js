@@ -35,7 +35,7 @@ function init(){
 
     //creating the Scene
     scene = new THREE.Scene();
-    scene.background = new THREE.Color('#878787')
+    scene.background = new THREE.Color('#181818')
 
     // adding rectSidelength camera PerspectiveCamera( fov, aspect, near, far)
     camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 100 );
@@ -76,10 +76,14 @@ function init(){
         **** Geometries and Objects ****
         ********************************
     */
-
+    const texture = new THREE.TextureLoader().load("assets/heightmap_flat.png")
+    const colors = new THREE.TextureLoader().load("assets/1DColorscale_1.png")
 
     let uniforms = {
         // TODO: load textures and set uniform variables
+        scaleFactor: {value: 1.5},
+        heightmap: {value: texture},
+        colormap: {value: colors},
         lightDir: {value: directional_light.position},
         diffSpecLightIntensity: {value: new THREE.Vector4(directional_light.intensity, directional_light.intensity, directional_light.intensity, directional_light.intensity)},
         ambientLightIntensity: {value: new THREE.Vector4(0.5, 0.5, 0.5, 1.0)},
@@ -93,21 +97,67 @@ function init(){
             glslVersion: THREE.GLSL3
         });
 
-    let vertices, uvs;
-    let geometry = new THREE.BufferGeometry();
-    let indices ;
 
-    // TODO: calculate rectangular geometry with triangular faces
-    // TODO: calculate uv coordinates
+    // calculate rectangular geometry with triangular faces
+    // calculate uv coordinates
 
+    // got help from the group Rebekka & Simon with that part
+    // and also: https://stackoverflow.com/questions/35408593/generate-grid-mesh
+
+    let vertices = []
+    let uvs = []
+    let geometry = new THREE.BufferGeometry()
+    let indices = []
+    let center = terrainWidth / 2;
+    let y = 0;
+
+    const squareCount = rectSidelength
+    const squareSideLength = terrainWidth / squareCount
+    let rowSize = (squareCount+1);
+
+    // no idea what's happening here
+    for ( let i = 0; i <= squareCount; i++ ) {
+        let v = i / squareCount
+
+        // z coordinate
+        let z = 0 - center + i * squareSideLength
+
+        for ( let j = 0; j <= squareCount; j++ ) {
+            let u = j / squareCount
+
+            // x coordinate
+            let x = 0 - center + j * squareSideLength
+            vertices.push(x, y, z)
+            uvs.push(u,v)
+        }
+    }
+
+    for ( let i = 0; i < squareCount; i++ ) {
+        // was passiert hier?
+        let x = i + 1
+        let rowOffset0 = ( x-1 + 0 ) * rowSize
+        let rowOffset1 = ( x-1 + 1 ) * rowSize
+        for ( let j= 0; j < squareCount; j++ ) {
+            // was passiert hier? Was ist offset?
+            let y = j + 1
+            let nodeOffset0 = rowOffset0 + y-1
+            let nodeOffset1 = rowOffset1 + y-1
+            indices.push(nodeOffset0, nodeOffset0 + 1, nodeOffset1)
+            indices.push(nodeOffset1, nodeOffset0 + 1, nodeOffset1 + 1)
+        }
+    }
     geometry.setIndex(indices);
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices,3));
     geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs,2));
     geometry.computeVertexNormals();
 
-
+    const material = new THREE.MeshBasicMaterial({color: 0x0000ff, wireframe: true, map: texture})
+    const grid = new THREE.Mesh( geometry, shaderMaterial )
+    // rotate by 180° otherwise the whole thing is upside down
+    grid.rotateX(3.14159265358979323846264377);
+    scene.add( grid )
 }
-
+    // TODO: control for menu so only the resolution can be changed
 /*
     ********************************
     *** Animation and Rendering ****
@@ -116,7 +166,9 @@ function init(){
 
 // extendable render wrapper
 function render(){
-    shaderMaterial.uniforms.diffSpecLightIntensity.value.copy(new THREE.Vector4(directional_light.intensity,directional_light.intensity,directional_light.intensity, 1.0));
+    shaderMaterial.uniforms.diffSpecLightIntensity.value.copy(new THREE.Vector4(directional_light.intensity,
+                                                            directional_light.intensity,
+                                                            directional_light.intensity, 1.0));
     renderer.render(scene, camera );
 }
 
