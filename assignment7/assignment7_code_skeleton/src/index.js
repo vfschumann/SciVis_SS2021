@@ -89,10 +89,10 @@ function animate() {
 /* RENDER HANDLING */
 function initialize_objects(){
     clean(scene);
-   // TODO: call your render-functions
-   renderAtoms( atom_data, scene )
-  // renderConnectionsLines(atom_data.connection_list, scene)
-  renderConnectionsCylinders(atom_data.connection_list, scene)
+    // TODO: call your render-functions
+    renderAtoms( atom_data, scene )
+   // renderConnectionsLines(atom_data.connection_list, scene)
+   renderConnectionsCylinders(atom_data, scene)
 }
 
 
