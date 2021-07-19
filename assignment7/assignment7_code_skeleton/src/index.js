@@ -80,10 +80,10 @@ function onWindowResize() {
 window.addEventListener( 'resize', onWindowResize, false );
 
 function animate() {
-        requestAnimationFrame( animate );
-        controls.update();
-        renderer.render(scene, camera );
-        stats.update();
+    requestAnimationFrame( animate );
+    controls.update();
+    renderer.render(scene, camera );
+    stats.update();
 }
 
 /* RENDER HANDLING */

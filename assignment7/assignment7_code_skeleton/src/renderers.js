@@ -4,8 +4,8 @@ import * as THREE from 'three';
 import { Vector3 } from "three";
 
 /********************************
-* ATOM AND CONNECTION RENDERING *
-*********************************/
+ * ATOM AND CONNECTION RENDERING *
+ *********************************/
 
 // ATOMS
 // TODO: function -> render atoms as spheres
