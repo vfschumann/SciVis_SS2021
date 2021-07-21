@@ -1,3 +1,4 @@
+//Schumann_Vic-Fabienne__Kopp_Alexandra
 //language=GLSL
 export const mipShaderFrag =`
     
@@ -24,8 +25,11 @@ void main(){
     // TODO: implement Maximum Intensity Projection
     for(int i = 0; i < MAX_STEPS; i++){
 
+        //intensity = theta_k * intensity + b_k;
+
     }
 
-    fragColor = vec4(178.0/255.0, 34.0/255.0, 34.0/255.0,1.0);
+    //fragColor = vec4(178.0/255.0, 34.0/255.0, 34.0/255.0,1.0);
+    fragColor = vec4(v_texCoord.x, v_texCoord.y, v_texCoord.z, 1.0);
 }
 `
