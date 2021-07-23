@@ -44,6 +44,7 @@ export function renderAtoms(atom_data, scene) {
         const material = new THREE.MeshPhongMaterial({ color: color });
 
 
+        
         // was macht der folgende Block?
         const object = new THREE.Mesh(sphereGeometry, material);
         // object.setAttribute('color', new THREE.Float32BufferAttribute(color, 3));

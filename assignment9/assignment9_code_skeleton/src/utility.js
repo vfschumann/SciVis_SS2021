@@ -1,4 +1,5 @@
 /**
+ * Schumann_Vic-Fabienne__Kopp_Alexandra
  * @returns {{sliceThickness: *[], filename: string, dimensions: *[]}}
  */
 export function textParse(text) {

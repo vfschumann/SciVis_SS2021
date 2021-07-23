@@ -1,4 +1,4 @@
-/*
+/*Schumann_Vic-Fabienne__Kopp_Alexandra
     ********************************
     ********** Basic Setup *********
     ********************************
@@ -105,7 +105,8 @@ function init(){
                 url,
                 function ( data ) {
                     //TODO convert data to THREE.DataTexture3D
-                    let texture3D = '';
+                    data = new Uint8Array(data)
+                    let texture3D = new THREE.DataTexture3D(data,...datFile.dimensions);
                     createVolume(texture3D,datFile);
                 }
             )
@@ -126,7 +127,9 @@ function createVolume(texture3D,datFile){
     texture3D.minFilter = texture3D.magFilter = THREE.LinearFilter;
 
     // TODO: get texture dimensions and set it for uniform u_volumeTextureSize
-    let volumeTextureSize;
+    let volumeTextureSize = datFile.dimensions;
+    const longestEdge = Math.max(...volumeTextureSize)
+    volumeTextureSize = volumeTextureSize.map(dim => dim / longestEdge);
     uniforms.u_volumeTexture.value = texture3D;
     uniforms.u_volumeTexSize.value = volumeTextureSize;
 
@@ -135,19 +138,50 @@ function createVolume(texture3D,datFile){
     //TODO: create a geometry with quadratic voxels and volume dimensions
     //TODO BONUS:  handle quadratic and non quadratic voxels and volume dimensions
 
-    let vertices = [];
+    let vertices = [
+        0,0,0,
+        uniforms.u_volumeTexSize.value[0], 0, 0,
+        uniforms.u_volumeTexSize.value[0], 0, uniforms.u_volumeTexSize.value[2],
+        0,0,uniforms.u_volumeTexSize.value[2],
+        0, uniforms.u_volumeTexSize.value[1], 0,
+        uniforms.u_volumeTexSize.value[0], uniforms.u_volumeTexSize.value[1], 0,
+        uniforms.u_volumeTexSize.value[0], uniforms.u_volumeTexSize.value[1], uniforms.u_volumeTexSize.value[2],
+        0,uniforms.u_volumeTexSize.value[1],uniforms.u_volumeTexSize.value[2]
+    ];
 
-    let texCoords = [];
+    let texCoords = [
+        0.0, 0.0, 0.0,
+        1.0,0.0,0.0,
+        1.0,0.0,1.0,
+        0.0,0.0,1.0,
+        0.0,1.0,0.0,
+        1.0,1.0,0.0,
+        1.0,1.0,1.0,
+        0.0,1.0,1.0,
+    ];
 
-    let indices = [];
+    let indices = [
+        0,1,4,
+        1,5,4,
+        1,2,5,
+        2,6,5,
+        2,6,7,
+        3,2,7,
+        3,7,0,
+        7,4,0,
+        1,3,0,
+        1,2,3,
+        7,4,5,
+        7,5,6,
+    ];
 
     geometry.setIndex(indices);
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices,3));
     geometry.setAttribute('texCoords', new THREE.Float32BufferAttribute(texCoords,3));
     geometry.computeVertexNormals();
-
     material = fragShaderMaterial(ShaderApi.currentShader);
     mesh = new THREE.Mesh( geometry, material );
+    mesh.geometry.center();
     scene.add(mesh);
 }
 
