@@ -49,15 +49,19 @@ function init(){
     let geometry = new THREE.BufferGeometry()
 
     let vertices = [   -0.5,  0.0,  0.5,
-                        0.5,  0.0,  0.5,
-                        0.5,  0.0, -0.5,
-                       -0.5,  0.0, -0.5];
+        0.5,  0.0,  0.5,
+        0.5,  0.0, -0.5,
+        -0.5,  0.0, -0.5];
 
     // TODO: define texCoords
-    let texCoords = [  ];
+    let texCoords = [   1,0,
+        1,1,
+        1,0,
+        0,0];
 
     // TODO: set indices
-    let indices = [  ];
+    let indices = [ 0,2,3,
+        0,1,2 ];
 
     xSpace = [-2.0, 2.0];
     ySpace = [-2.0, 2.0];
@@ -69,7 +73,7 @@ function init(){
 
     // TODO: texture needs to be set
     uniforms = {
-        u_vecFieldTex: {type: 't', value: texture },
+        u_vecFieldTex: {type: 't', value: result },
         u_noiseTexture: { type: 't', value: noiseTexture },
 
     }
@@ -97,12 +101,22 @@ function generateVectorFieldTexture(){
 
     // TODO: set size of vector field
     let xDim, yDim;
-    let vectorField = new Float32Array();
+    xDim = 4.0;
+    yDim = 4.0;
+    let steps = 100;
+    let stepsize = Math.max(xDim, yDim)/steps;
+    let vectorField = [];
 
     // TODO: create the Vector Field Texture using sampleVectorField(x,y,t) function of utility.js
     // @returns: vec2
+    for(let i = -xDim/2.0; i <= xDim/2.0; i = i + stepsize){
+        for(let j = -yDim/2.0; j <= yDim/2.0; j = j + stepsize){
+            vectorField.push(sampleVectorField(i, j, 1));
+        }
+    }
+    vectorField = new Float32Array(vectorField);
 
-    let texture = new THREE.DataTexture( vectorField, xDim, yDim)
+    let texture = new THREE.DataTexture(vectorField, xDim, yDim)
 
     texture.format = THREE.RGFormat;
     texture.type = THREE.FloatType;
@@ -129,7 +143,7 @@ function render(){
 function animate() {
     requestAnimationFrame( animate );
     render();
-   // TODO: BONUS animate
+    // TODO: BONUS animate
 }
 
 
