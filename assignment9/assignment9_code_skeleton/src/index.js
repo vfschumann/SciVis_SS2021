@@ -127,9 +127,19 @@ function createVolume(texture3D,datFile){
     texture3D.minFilter = texture3D.magFilter = THREE.LinearFilter;
 
     // TODO: get texture dimensions and set it for uniform u_volumeTextureSize
-    let volumeTextureSize = datFile.dimensions;
+    let volumeTextureSize = new Float32Array(datFile.dimensions);
     const longestEdge = Math.max(...volumeTextureSize)
+    console.log(longestEdge)
+
+    const longestEdge_rebecca = Math.max(datFile.dimensions[0], datFile.dimensions[1], datFile.dimensions[2]);
+    console.log(longestEdge_rebecca)
+
     volumeTextureSize = volumeTextureSize.map(dim => dim / longestEdge);
+    console.log("volumneText: ", volumeTextureSize.map)
+
+
+
+
     uniforms.u_volumeTexture.value = texture3D;
     uniforms.u_volumeTexSize.value = volumeTextureSize;
 
