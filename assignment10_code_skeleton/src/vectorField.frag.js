@@ -14,7 +14,7 @@ out vec4 fragColor;
 
 void main(){
     vec2 UVpos = v_texCoord;
-    vec2 vecVal = texture(u_vecFieldTex, UVpos).rg;
+    vec2 vecVal = normalize(texture(u_vecFieldTex, UVpos).rg);
 
    // TODO: LIC (Line Integral Convolution)
     
