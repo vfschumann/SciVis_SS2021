@@ -54,14 +54,14 @@ function init(){
                        -0.5,  0.0, -0.5];
 
     // TODO: define texCoords
-    let texCoords = [   1.0,0.0,
+    let texCoords = [   0.0,0.0,
+                        0.0,1.0,
                         1.0,1.0,
-                        0.0,0.0,
-                        0.0,1.0, ];
+                        1.0,0.0, ];
 
     // TODO: set indices
-    let indices = [ 3,2,0,
-                    2,1,0 ];
+    let indices = [ 0,2,3,
+                    0,1,2];
 
     xSpace = [-2.0, 2.0];
     ySpace = [-2.0, 2.0];
@@ -104,18 +104,19 @@ function generateVectorFieldTexture(xSpace, ySpace){
     let yDim = 128
 
     // TODO: set size of vector field
-    let vectorField = new Float32Array(xDim+yDim);
 
-    // TODO: create the Vector Field Texture using sampleVectorField(x,y,t) function of utility.js
+    // // TODO: create the Vector Field Texture using sampleVectorField(x,y,t) function of utility.js
     // @returns: vec2
     let index = 0;
-    let steps = (Math.abs(xSpace[0])+Math.abs(xSpace[1]))/(Math.sqrt(vectorField.length)-1)
-    for (let x = xSpace[0]; x <= xSpace[1]; x += steps) {
-        for (let y = ySpace[0]; y <= ySpace[1]; y += steps) {
-            let vector = sampleVectorField(x,y,1.0)
+    let steps = (Math.abs(xSpace[0]) + Math.abs(xSpace[1])) / (xDim);
+    let vectorField = new Float32Array(100000, 100000);
+
+    for (let x = xSpace[0]; x < xSpace[1]; x += steps) {
+        for (let y = ySpace[0]; y < ySpace[1]; y += steps) {
+            let vector = sampleVectorField(x,y,1.0);
             vectorField[index] = vector[0];
             vectorField[index+1] = vector[1];
-            index+=2
+            index+=2;
          }
     }
     console.log(vectorField);
@@ -130,7 +131,6 @@ function generateVectorFieldTexture(xSpace, ySpace){
 
     return texture;
 }
-
 
 // TODO: add function for visualizing the vectors as arrows (triangles)
 
@@ -150,7 +150,6 @@ function animate() {
     render();
    // TODO: BONUS animate
 }
-
 
 /*
     ********************************
