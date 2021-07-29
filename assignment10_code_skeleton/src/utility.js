@@ -1,3 +1,4 @@
+// Schumann_Vic-Fabienne__Kopp_Alexandra
 export function sampleVectorField(x,y,t){
     //from https://cgl.ethz.ch/research/visualization/data.php
     // https://cgl.ethz.ch/research/visualization/code/forceddampedduffing2d.py

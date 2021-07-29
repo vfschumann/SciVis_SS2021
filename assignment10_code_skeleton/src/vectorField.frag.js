@@ -1,4 +1,5 @@
 //language=GLSL
+// Schumann_Vic-Fabienne__Kopp_Alexandra
 export const vectorFieldFrag =`
 
 precision highp float;
